@@ -1,12 +1,12 @@
 package com.example.joel.bucketlist;
 
-import android.app.Activity;
+
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,13 +16,12 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ListItemAdapter.ListItemCheckedListener {
+public class MainActivity extends AppCompatActivity implements ListItemCheckedListener {
 
     private List<ListItem> mListItems;
     private RecyclerView mRecyclerView;
@@ -122,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements ListItemAdapter.L
     }
 
     @Override
-    public void onBucketCheckBoxChanged(int position, boolean checkbox) {
+    public void onCheckBoxChanged(int position, boolean checkbox) {
         ListItem listItem = mListItems.get(position);
         listItem.setCheckbox(checkbox);
         mListItems.set(position, listItem);

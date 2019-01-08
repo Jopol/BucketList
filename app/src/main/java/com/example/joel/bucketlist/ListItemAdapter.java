@@ -1,5 +1,6 @@
 package com.example.joel.bucketlist;
 
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,9 +21,6 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHo
         this.mListItemCheckedListener = mListItemCheckedListener;
     }
 
-    public interface ListItemCheckedListener {
-        void onBucketCheckBoxChanged(int position, boolean isChecked);
-    }
 
     @NonNull
     @Override
@@ -45,6 +43,7 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHo
         // Populate the views with the data from the list
         holder.checkBox.setChecked(listItem.isCheckbox());
         holder.title.setText(listItem.getTitle());
+        ifChecked(holder.checkBox, holder.title);
     }
 
     @Override
@@ -60,6 +59,13 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHo
         }
     }
 
+    public void ifChecked(CheckBox checkBox, TextView title){
+        if(checkBox.isChecked()){
+            title.setPaintFlags(title.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
+    }
+
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public View view;
         public CheckBox checkBox;
@@ -71,7 +77,18 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.ViewHo
             this.checkBox = itemView.findViewById(R.id.checkBox);
             this.title = itemView.findViewById(R.id.textViewTitle);
             this.view = itemView;
+
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int clickedPosition = getAdapterPosition();
+                    mListItemCheckedListener.onCheckBoxChanged(
+                            clickedPosition,
+                            checkBox.isChecked()
+                    );
+                    ifChecked(checkBox, title);
+                }
+            });
         }
     }
-
 }
